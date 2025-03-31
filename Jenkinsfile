@@ -1,79 +1,78 @@
-#!/usr/bin/env groovy
 pipeline {
     agent any
 
     stages {
         stage('Install-pip-deps') {
             steps {
-                echo 'Installing all required dependencies...'
-                git 'https://github.com/mtararujs/python-greetings.git'
-                sh 'ls -la'
-                sh 'pip install -r requirements.txt'
+                script {
+                    installPipDeps()
+                }
             }
         }
-        stage('deploy-to-dev') {
+        stage('Deploy to DEV') {
             steps {
-                echo 'Deploying to dev...'
-                git 'https://github.com/mtararujs/python-greetings'
-                sh 'pm2 delete greetings-app-dev & set "errorlevel%l=0"'
-                sh 'pm2 start app.py --name greetings-app-dev --port 7001'
+                script {
+                    deploy("DEV", 7001)
+                }
             }
         }
-        stage('tests-on-dev') {
+        stage('Tests on DEV') {
             steps {
-                echo 'Running tests on dev...'
-                git 'https://github.com/mtararujs/course-js-api-framework'
-                sh 'npm install'
-                sh 'npm run greetings greetings_dev'
+                script {
+                    testing("DEV")
+                }
             }
         }
-        stage('deploy-to-staging') {
+        stage('Deploy to STG') {
             steps {
-                echo 'Deploying to staging...'
-                git 'https://github.com/mtararujs/python-greetings'
-                sh 'pm2 delete greetings-app-staging & set "errorlevel%l=0"'
-                sh 'pm2 start app.py --name greetings-app-staging --port 7002'
+                script {
+                    deploy("STG", 7002)
+                }
             }
         }
-        stage('tests-on-staging') {
+        stage('Tests on STG') {
             steps {
-                echo 'Running tests on staging...'
-                git 'https://github.com/mtararujs/course-js-api-framework'
-                sh 'npm install'
-                sh 'npm run greetings greetings_staging'
+                script {
+                    testing("STG")
+                }
             }
         }
-         stage('deploy-to-preprod') {
+        stage('Deploy to PRD') {
             steps {
-                echo 'Deploying to preprod...'
-                git 'https://github.com/mtararujs/python-greetings'
-                sh 'pm2 delete greetings-app-preprod & set "errorlevel%l=0"'
-                sh 'pm2 start app.py --name greetings-app-preprod --port 7003'
+                script {
+                    deploy("PRD", 7004)
+                }
             }
         }
-        stage('tests-on-preprod') {
+         stage('Tests on PRD') {
             steps {
-                echo 'Running tests on preprod...'
-                git 'https://github.com/mtararujs/course-js-api-framework'
-                sh 'npm install'
-                sh 'npm run greetings greetings_preprod'
-            }
-        }
-        stage('deploy-to-prod') {
-            steps {
-                echo 'Deploying to prod...'
-                git 'https://github.com/mtararujs/python-greetings'
-                sh 'pm2 delete greetings-app-prod & set "errorlevel%l=0"'
-                sh 'pm2 start app.py --name greetings-app-prod --port 7004'
-            }
-        }
-        stage('tests-on-prod') {
-            steps {
-                echo 'Running tests on prod...'
-                git 'https://github.com/mtararujs/course-js-api-framework'
-                sh 'npm install'
-                sh 'npm run greetings greetings_prod'
+                script {
+                    testing("PRD")
+                }
             }
         }
     }
+}
+
+def installPipDeps(){
+    echo "Installing Python dependencies"
+    git 'https://github.com/mtararujs/python-greetings'
+    sh 'pip install -r requirements.txt'
+}
+
+def deploy(String environment, int port) {
+    echo "Deploying to ${environment}"
+    git 'https://github.com/mtararujs/python-greetings'
+    // Windows komanda
+    //sh "pm2 delete greetings-app-${environment} & set \"errorlevel%l=0\""
+    // Unix komanda
+    sh "pm2 delete greetings-app-${environment} || true"
+    sh "pm2 start app.py --name greetings-app-${environment} --port ${port}"
+}
+
+def testing(String environment) {
+    echo "Testing on ${environment}"
+    git 'https://github.com/mtararujs/course-js-api-framework'
+    sh 'npm install'
+    sh "npm run greetings greetings_${environment}"
 }
