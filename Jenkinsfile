@@ -1,78 +1,91 @@
+#!/usr/bin/env groovy
 pipeline {
     agent any
 
     stages {
         stage('Install-pip-deps') {
             steps {
-                script {
-                    installPipDeps()
-                }
+                echo 'Installing all required dependencies...'
+                git 'https://github.com/mtararujs/python-greetings'
+                sh 'ls -la'  // Pēc izvēles
+                sh 'pip install -r requirements.txt'
             }
         }
-        stage('Deploy to DEV') {
+        stage('deploy-to-dev') {
             steps {
-                script {
-                    deploy("DEV", 7001)
-                }
+                echo 'Deploying to dev...'
+                git 'https://github.com/mtararujs/python-greetings'
+                // Windows komanda
+                //sh 'pm2 delete greetings-app-dev & set "errorlevel%l=0"'
+                // Unix komanda (ja nepieciešams)
+                sh 'pm2 delete greetings-app-dev || true'
+                sh 'pm2 start app.py --name greetings-app-dev --port 7001'
             }
         }
-        stage('Tests on DEV') {
+        stage('tests-on-dev') {
             steps {
-                script {
-                    testing("DEV")
-                }
+                echo 'Running tests on dev...'
+                git 'https://github.com/mtararujs/course-js-api-framework'
+                sh 'npm install'
+                sh 'npm run greetings greetings_dev'
             }
         }
-        stage('Deploy to STG') {
+        stage('deploy-to-staging') {
             steps {
-                script {
-                    deploy("STG", 7002)
-                }
+                echo 'Deploying to staging...'
+                git 'https://github.com/mtararujs/python-greetings'
+                // Windows komanda
+                //sh 'pm2 delete greetings-app-staging & set "errorlevel%l=0"'
+                // Unix komanda (ja nepieciešams)
+                sh 'pm2 delete greetings-app-staging || true'
+                sh 'pm2 start app.py --name greetings-app-staging --port 7002'
             }
         }
-        stage('Tests on STG') {
+        stage('tests-on-staging') {
             steps {
-                script {
-                    testing("STG")
-                }
+                echo 'Running tests on staging...'
+                git 'https://github.com/mtararujs/course-js-api-framework'
+                sh 'npm install'
+                sh 'npm run greetings greetings_staging'
             }
         }
-        stage('Deploy to PRD') {
+         stage('deploy-to-preprod') {
             steps {
-                script {
-                    deploy("PRD", 7004)
-                }
+                echo 'Deploying to preprod...'
+                git 'https://github.com/mtararujs/python-greetings'
+                // Windows komanda
+                //sh 'pm2 delete greetings-app-preprod & set "errorlevel%l=0"'
+                // Unix komanda (ja nepieciešams)
+                sh 'pm2 delete greetings-app-preprod || true'
+                sh 'pm2 start app.py --name greetings-app-preprod --port 7003'
             }
         }
-         stage('Tests on PRD') {
+        stage('tests-on-preprod') {
             steps {
-                script {
-                    testing("PRD")
-                }
+                echo 'Running tests on preprod...'
+                git 'https://github.com/mtararujs/course-js-api-framework'
+                sh 'npm install'
+                sh 'npm run greetings greetings_preprod'
+            }
+        }
+        stage('deploy-to-prod') {
+            steps {
+                echo 'Deploying to prod...'
+                git 'https://github.com/mtararujs/python-greetings'
+                // Windows komanda
+                //sh 'pm2 delete greetings-app-prod & set "errorlevel%l=0"'
+                // Unix komanda (ja nepieciešams)
+                sh 'pm2 delete greetings-app-prod || true'
+                sh 'pm2 start app.py --name greetings-app-prod --port 7004'
+            }
+        }
+        stage('tests-on-prod') {
+            steps {
+                echo 'Running tests on prod...'
+                git 'https://github.com/mtararujs/course-js-api-framework'
+                sh 'npm install'
+                sh 'npm run greetings greetings_prod'
             }
         }
     }
-}
-
-def installPipDeps(){
-    echo "Installing Python dependencies"
-    git 'https://github.com/mtararujs/python-greetings'
-    sh 'pip install -r requirements.txt'
-}
-
-def deploy(String environment, int port) {
-    echo "Deploying to ${environment}"
-    git 'https://github.com/mtararujs/python-greetings'
-    // Windows komanda
-    //sh "pm2 delete greetings-app-${environment} & set \"errorlevel%l=0\""
-    // Unix komanda
-    sh "pm2 delete greetings-app-${environment} || true"
-    sh "pm2 start app.py --name greetings-app-${environment} --port ${port}"
-}
-
-def testing(String environment) {
-    echo "Testing on ${environment}"
-    git 'https://github.com/mtararujs/course-js-api-framework'
-    sh 'npm install'
-    sh "npm run greetings greetings_${environment}"
 }
