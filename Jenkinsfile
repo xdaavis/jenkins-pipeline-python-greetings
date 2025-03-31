@@ -6,7 +6,7 @@ pipeline {
         stage('Install-pip-deps') {
             steps {
                 echo 'Installing all required dependencies...'
-                git 'https://github.com/mtararujs/python-greetings'
+                git 'https://github.com/mtararujs/python-greetings.git'
                 sh 'ls -la'
                 sh 'pip install -r requirements.txt'
             }
