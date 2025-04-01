@@ -22,7 +22,7 @@ pipeline {
         }
         stage('tests-on-dev') {
             steps {
-                bat 'timeout /t 10 /nobreak'
+                bat 'timeout /t 10'
                 bat 'curl http://localhost:7001/health'
                 echo 'Running tests on dev...'
                 git url: 'https://github.com/mtararujs/course-js-api-framework', branch: 'main'
