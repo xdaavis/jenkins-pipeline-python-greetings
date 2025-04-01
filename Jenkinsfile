@@ -7,7 +7,7 @@ pipeline {
             steps {
                 echo 'Installing all required dependencies...'
                 git 'https://github.com/mtararujs/python-greetings'
-                sh 'ls -la'  // Pēc izvēles
+                sh 'ls -la'
                 sh 'pip install -r requirements.txt'
             }
         }
