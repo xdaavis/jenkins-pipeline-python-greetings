@@ -16,7 +16,7 @@ pipeline {
                 echo 'Deploying to dev...'
                 git url: 'https://github.com/mtararujs/python-greetings', branch: 'main'
                 bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-dev || exit 0'
-                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" start "C:\\Users\\davis\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" app.py --name greetings-app-dev --port 7001'
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" start "C:\\Users\\davis\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" app.py --name greetings-app-dev 7001'
             }
         }
         stage('tests-on-dev') {
