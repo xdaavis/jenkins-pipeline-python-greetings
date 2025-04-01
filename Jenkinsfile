@@ -8,7 +8,7 @@ pipeline {
                 echo 'Installing all required dependencies...'
                 git url: 'https://github.com/mtararujs/python-greetings', branch: 'main'
                 bat 'dir' // Windows: failu saraksts
-                bat 'pip install -r requirements.txt'
+                bat '"C:\\Users\\davis\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\pip.exe" install -r requirements.txt'
             }
         }
         stage('deploy-to-dev') {
