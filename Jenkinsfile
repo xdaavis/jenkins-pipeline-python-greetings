@@ -22,11 +22,12 @@ pipeline {
         }
         stage('tests-on-dev') {
             steps {
+                bat 'curl http://localhost:7001'
                 echo 'Running tests on dev...'
                 git url: 'https://github.com/mtararujs/course-js-api-framework', branch: 'main'
-                bat 'npm install'
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\npm.cmd" install'
                 bat 'dir'
-                bat 'npm run greetings greetings_dev'
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\npm.cmd" run greetings'
             }
         }
         stage('deploy-to-staging') {
