@@ -28,7 +28,7 @@ pipeline {
                 git url: 'https://github.com/mtararujs/course-js-api-framework', branch: 'main'
                 bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\npm.cmd" install'
                 bat 'dir'
-                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\npm.cmd" run fetch_greetings'
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\npm.cmd" run fetch_greetings.js'
             }
         }
         stage('deploy-to-staging') {
