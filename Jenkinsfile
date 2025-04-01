@@ -15,8 +15,8 @@ pipeline {
             steps {
                 echo 'Deploying to dev...'
                 git url: 'https://github.com/mtararujs/python-greetings', branch: 'main'
-                bat 'pm2 delete greetings-app-dev & set "errorlevel%l=0"' // Windows: pm2 delete
-                bat 'pm2 start app.py --name greetings-app-dev --port 7001'
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-dev & set "errorlevel%l=0"' // Windows: pm2 delete
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" start app.py --name greetings-app-dev --port 7001'
             }
         }
         stage('tests-on-dev') {
@@ -31,8 +31,8 @@ pipeline {
             steps {
                 echo 'Deploying to staging...'
                 git url: 'https://github.com/mtararujs/python-greetings', branch: 'main'
-                bat 'pm2 delete greetings-app-staging & set "errorlevel%l=0"' // Windows: pm2 delete
-                bat 'pm2 start app.py --name greetings-app-staging --port 7002'
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-staging & set "errorlevel%l=0"' // Windows: pm2 delete
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" start app.py --name greetings-app-staging --port 7002'
             }
         }
         stage('tests-on-staging') {
@@ -47,8 +47,8 @@ pipeline {
             steps {
                 echo 'Deploying to preprod...'
                 git url: 'https://github.com/mtararujs/python-greetings', branch: 'main'
-                bat 'pm2 delete greetings-app-preprod & set "errorlevel%l=0"' // Windows: pm2 delete
-                bat 'pm2 start app.py --name greetings-app-preprod --port 7003'
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-preprod & set "errorlevel%l=0"' // Windows: pm2 delete
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" start app.py --name greetings-app-preprod --port 7003'
             }
         }
         stage('tests-on-preprod') {
@@ -63,8 +63,8 @@ pipeline {
             steps {
                 echo 'Deploying to prod...'
                 git url: 'https://github.com/mtararujs/python-greetings', branch: 'main'
-                bat 'pm2 delete greetings-app-prod & set "errorlevel%l=0"' // Windows: pm2 delete
-                bat 'pm2 start app.py --name greetings-app-prod --port 7004'
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-prod & set "errorlevel%l=0"' // Windows: pm2 delete
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" start app.py --name greetings-app-prod --port 7004'
             }
         }
         stage('tests-on-prod') {
