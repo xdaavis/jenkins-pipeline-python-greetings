@@ -15,7 +15,7 @@ pipeline {
             steps {
                 echo 'Deploying to dev...'
                 git url: 'https://github.com/mtararujs/python-greetings', branch: 'main'
-                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-dev & set "errorlevel%l=0"' // Windows: pm2 delete
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-dev || exit 0'
                 bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" start app.py --name greetings-app-dev --port 7001'
             }
         }
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 echo 'Deploying to staging...'
                 git url: 'https://github.com/mtararujs/python-greetings', branch: 'main'
-                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-staging & set "errorlevel%l=0"' // Windows: pm2 delete
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-staging & set "errorlevel%l=0"'
                 bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" start app.py --name greetings-app-staging --port 7002'
             }
         }
@@ -47,7 +47,7 @@ pipeline {
             steps {
                 echo 'Deploying to preprod...'
                 git url: 'https://github.com/mtararujs/python-greetings', branch: 'main'
-                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-preprod & set "errorlevel%l=0"' // Windows: pm2 delete
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-preprod & set "errorlevel%l=0"'
                 bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" start app.py --name greetings-app-preprod --port 7003'
             }
         }
@@ -63,7 +63,7 @@ pipeline {
             steps {
                 echo 'Deploying to prod...'
                 git url: 'https://github.com/mtararujs/python-greetings', branch: 'main'
-                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-prod & set "errorlevel%l=0"' // Windows: pm2 delete
+                bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" delete greetings-app-prod & set "errorlevel%l=0"'
                 bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\pm2.cmd" start app.py --name greetings-app-prod --port 7004'
             }
         }
