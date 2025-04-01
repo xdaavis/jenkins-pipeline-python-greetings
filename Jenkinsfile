@@ -22,7 +22,6 @@ pipeline {
         }
         stage('tests-on-dev') {
             steps {
-                bat 'curl http://localhost:7001/health'
                 echo 'Running tests on dev...'
                 git url: 'https://github.com/mtararujs/course-js-api-framework', branch: 'main'
                 bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\npm.cmd" install'
