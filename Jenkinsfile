@@ -23,7 +23,7 @@ pipeline {
         stage('tests-on-dev') {
             steps {
                 bat 'dir'
-                bat '"C:\\Windows\\System32\\curl.exe" http://localhost:7001/health'
+                bat '"C:\\Windows\\System32\\curl.exe" http://localhost:7001/greetings'
                 echo 'Running tests on dev...'
                 git url: 'https://github.com/mtararujs/course-js-api-framework', branch: 'main'
                 bat '"C:\\Users\\davis\\AppData\\Roaming\\npm\\npm.cmd" install'
