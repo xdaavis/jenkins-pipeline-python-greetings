@@ -15,10 +15,7 @@ pipeline {
             steps {
                 echo 'Deploying to dev...'
                 git 'https://github.com/mtararujs/python-greetings'
-                // Windows komanda
-                //sh 'pm2 delete greetings-app-dev & set "errorlevel%l=0"'
-                // Unix komanda (ja nepieciešams)
-                sh 'pm2 delete greetings-app-dev || true'
+                sh 'pm2 delete greetings-app-dev & set "errorlevel%l=0"'
                 sh 'pm2 start app.py --name greetings-app-dev --port 7001'
             }
         }
@@ -34,10 +31,7 @@ pipeline {
             steps {
                 echo 'Deploying to staging...'
                 git 'https://github.com/mtararujs/python-greetings'
-                // Windows komanda
-                //sh 'pm2 delete greetings-app-staging & set "errorlevel%l=0"'
-                // Unix komanda (ja nepieciešams)
-                sh 'pm2 delete greetings-app-staging || true'
+                sh 'pm2 delete greetings-app-staging & set "errorlevel%l=0"'
                 sh 'pm2 start app.py --name greetings-app-staging --port 7002'
             }
         }
@@ -53,10 +47,7 @@ pipeline {
             steps {
                 echo 'Deploying to preprod...'
                 git 'https://github.com/mtararujs/python-greetings'
-                // Windows komanda
-                //sh 'pm2 delete greetings-app-preprod & set "errorlevel%l=0"'
-                // Unix komanda (ja nepieciešams)
-                sh 'pm2 delete greetings-app-preprod || true'
+                sh 'pm2 delete greetings-app-preprod & set "errorlevel%l=0"'
                 sh 'pm2 start app.py --name greetings-app-preprod --port 7003'
             }
         }
@@ -72,10 +63,7 @@ pipeline {
             steps {
                 echo 'Deploying to prod...'
                 git 'https://github.com/mtararujs/python-greetings'
-                // Windows komanda
-                //sh 'pm2 delete greetings-app-prod & set "errorlevel%l=0"'
-                // Unix komanda (ja nepieciešams)
-                sh 'pm2 delete greetings-app-prod || true'
+                sh 'pm2 delete greetings-app-prod & set "errorlevel%l=0"'
                 sh 'pm2 start app.py --name greetings-app-prod --port 7004'
             }
         }
